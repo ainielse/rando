@@ -34,11 +34,13 @@ l_build_option            varchar2(4000);
 l_page_header             varchar2(4000);
 
 l_count      number;
+
+
 begin
 
---  logger.append_param(l_params, 'p_app_id', p_app_id);
---  logger.append_param(l_params, 'p_list_name', p_list_name);
---  logger.log('START', l_scope, null, l_params);
+  logger.append_param(l_params, 'p_app_id', p_app_id);
+  logger.append_param(l_params, 'p_list_name', p_list_name);
+  logger.log('START', l_scope, null, l_params);
   
   -- base the order on the Navigation Menu
   for listRec in (
@@ -94,15 +96,15 @@ begin
     htp.p(l_help);      
 
     
---    l_extra_help := get_env_var(p_var_name  => 'FDM_P' || l_page_id ||'_HELP');
+    l_extra_help := get_env_var(p_var_name  => 'FDM_P' || l_page_id ||'_HELP');
   
---    if l_extra_help is not null then
---      htp.p(l_extra_help);
---    end if;
+    if l_extra_help is not null then
+      htp.p(l_extra_help);
+    end if;
 
 
     for regionRec in (
-          select apr.region_id, apr.region_name, apr.region_source
+          select apr.region_id, apr.region_name, apr.region_source, apr.source_type_code
                , apr.authorization_scheme apr_auth_scheme, apr.build_option_id apr_build_id
                , (select count(*)
                     from apex_application_page_items api
@@ -130,14 +132,16 @@ begin
       end if;
       
       -- check to see if this is a "help" region or if it has items
-      if regionRec.ct_of_items = 0 and nvl(lower(regionRec.region_name),'x') not like '%help%' then
+      if regionRec.ct_of_items = 0 
+           and (nvl(lower(regionRec.region_name),'x') not like '%help%'
+              or regionRec.source_type_code != 'STATIC_TEXT') then
         continue;
       end if;
         
       -- show the region and its items
       htp.p('<h4>' || regionRec.region_name ||  '</h4>');
       
-      if lower(regionRec.region_name) like '%help%' then
+      if lower(regionRec.region_name) like '%help%' and regionRec.source_type_code = 'STATIC_TEXT' then
         htp.p(regionRec.region_source);
       end if;
           
@@ -183,5 +187,6 @@ begin
     htp.p('<hr />');
   end loop; -- pages   
 
---  logger.log('END', l_scope, null);
+  logger.log('END', l_scope, null);
 end output_consolidated_help;
+
