@@ -44,7 +44,7 @@ begin
   
   -- base the order on the Navigation Menu
   for listRec in (
-            select list_entry_id, list_entry_parent_id, entry_text
+            select list_entry_id, list_entry_parent_id, apex_application.do_substitutions(entry_text) entry_text
                   , entry_target, display_sequence, entry_image
                   , level the_level
               from apex_application_list_entries
@@ -104,7 +104,7 @@ begin
 
 
     for regionRec in (
-          select apr.region_id, apr.region_name, apr.region_source, apr.source_type_code
+          select apr.region_id, apex_application.do_substitutions(apr.region_name) region_name, apr.region_source, apr.source_type_code
                , apr.authorization_scheme apr_auth_scheme, apr.build_option_id apr_build_id
                , (select count(*)
                     from apex_application_page_items api
@@ -150,7 +150,7 @@ begin
     
       for itemRec in (
           select api.item_id
-               , api.label item_label, api.item_help_text, api.inline_help_text, api.display_sequence
+               , apex_application.do_substitutions(api.label) item_label, api.item_help_text, api.inline_help_text, api.display_sequence
                , api.authorization_scheme, api.build_option_id
             from apex_application_page_items api 
             where api.region_id = regionRec.region_id
