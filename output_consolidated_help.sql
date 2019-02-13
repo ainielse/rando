@@ -1,5 +1,5 @@
 create or replace procedure output_consolidated_help( p_app_id                  in number
-                                  , p_list_name               in varchar2
+                                  , p_list_name               in varchar2 default 'Desktop Navigation Menu'
                                   , p_show_help_regions       in varchar2 default 'Y'   -- show content of static regions with name like lower('%help%')
                                   , p_apply_authorizations    in varchar2 default 'Y'   -- N ignore authorizations and show all. Y apply authorizations.
                                   , p_apply_builds            in varchar2 default 'Y') -- N ignore build options and show all. Y only show Include build options.                       
