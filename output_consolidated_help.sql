@@ -38,9 +38,9 @@ l_count      number;
 
 begin
 
-  logger.append_param(l_params, 'p_app_id', p_app_id);
-  logger.append_param(l_params, 'p_list_name', p_list_name);
-  logger.log('START', l_scope, null, l_params);
+--  logger.append_param(l_params, 'p_app_id', p_app_id);
+--  logger.append_param(l_params, 'p_list_name', p_list_name);
+--  logger.log('START', l_scope, null, l_params);
   
   -- base the order on the Navigation Menu
   for listRec in (
@@ -96,11 +96,11 @@ begin
     htp.p(l_help);      
 
     
-    l_extra_help := get_env_var(p_var_name  => 'FDM_P' || l_page_id ||'_HELP');
+--    l_extra_help := get_env_var(p_var_name  => 'FDM_P' || l_page_id ||'_HELP');
   
-    if l_extra_help is not null then
-      htp.p(l_extra_help);
-    end if;
+--    if l_extra_help is not null then
+--      htp.p(l_extra_help);
+--    end if;
 
 
     for regionRec in (
@@ -187,6 +187,6 @@ begin
     htp.p('<hr />');
   end loop; -- pages   
 
-  logger.log('END', l_scope, null);
+--  logger.log('END', l_scope, null);
 end output_consolidated_help;
 
