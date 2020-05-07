@@ -28,17 +28,17 @@ prompt APPLICATION 226 - Peer Review
 -- Application Export:
 --   Application:     226
 --   Name:            Peer Review
---   Date and Time:   10:21 Thursday May 7, 2020
+--   Date and Time:   12:42 Thursday May 7, 2020
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                     11
---       Items:                   28
+--       Items:                   29
 --       Computations:             3
 --       Processes:                9
 --       Regions:                 14
 --       Buttons:                 17
---       Dynamic Actions:          1
+--       Dynamic Actions:          2
 --     Shared Components:
 --       Logic:
 --       Navigation:
@@ -118,7 +118,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'Peer Review'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20200507101931'
+,p_last_upd_yyyymmddhh24miss=>'20200507124045'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -12556,7 +12556,7 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20190205121131'
+,p_last_upd_yyyymmddhh24miss=>'20200507124045'
 );
 wwv_flow_api.create_report_region(
  p_id=>wwv_flow_api.id(137333625071064305)
@@ -12572,9 +12572,11 @@ wwv_flow_api.create_report_region(
 'select rownum, checklist_item, item_description',
 '  from ( select checklist_item, item_description',
 '  from code_review_checklist',
+'  where code_category = :P8_CODE_CATEGORY',
 '  order by seq_no',
 '        )'))
 ,p_ajax_enabled=>'Y'
+,p_ajax_items_to_submit=>'P8_CODE_CATEGORY'
 ,p_query_row_template=>wwv_flow_api.id(132907621471608280)
 ,p_query_num_rows=>15
 ,p_query_options=>'DERIVED_REPORT_COLUMNS'
@@ -12616,6 +12618,44 @@ wwv_flow_api.create_report_columns(
 ,p_use_as_row_header=>'N'
 ,p_derived_column=>'N'
 ,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(126924646759808227)
+,p_name=>'P8_CODE_CATEGORY'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_api.id(137333625071064305)
+,p_item_default=>'APEX'
+,p_prompt=>'Code Category'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select distinct code_category d, code_category r',
+'  from code_review_checklist',
+'  order by upper(d)'))
+,p_cHeight=>1
+,p_field_template=>wwv_flow_api.id(132936911257608355)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'NONE'
+,p_attribute_02=>'N'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(126924988478808230)
+,p_name=>'Refresh'
+,p_event_sequence=>10
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P8_CODE_CATEGORY'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'change'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(126925021923808231)
+,p_event_id=>wwv_flow_api.id(126924988478808230)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_api.id(137333625071064305)
 );
 end;
 /
@@ -12954,6 +12994,7 @@ wwv_flow_api.create_install_script(
 '	"CREATED_BY" VARCHAR2(255) NOT NULL ENABLE, ',
 '	"UPDATED" DATE NOT NULL ENABLE, ',
 '	"UPDATED_BY" VARCHAR2(255) NOT NULL ENABLE, ',
+'	"CODE_CATEGORY" VARCHAR2(64 CHAR) DEFAULT ''APEX'', ',
 '	 CONSTRAINT "CODE_REVIEW_CHECKL_ID_PK" PRIMARY KEY ("ID")',
 '  USING INDEX  ENABLE',
 '   ) ;',
@@ -12967,7 +13008,6 @@ wwv_flow_api.create_install_script(
 '        :new.id := to_number(sys_guid(), ''XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'');',
 '    end if;',
 'end code_review_standard_biu;',
-'',
 '',
 '/',
 '',
@@ -12990,7 +13030,6 @@ wwv_flow_api.create_install_script(
 '    :new.updated_by := nvl(sys_context(''APEX$SESSION'',''APP_USER''),user);',
 'end code_review_checklist_biu;',
 '',
-'',
 '/',
 '',
 '',
@@ -13011,7 +13050,6 @@ wwv_flow_api.create_install_script(
 '    :new.updated := sysdate;',
 '    :new.updated_by := nvl(sys_context(''APEX$SESSION'',''APP_USER''),user);',
 'end code_review_biu;',
-'',
 '',
 '/',
 '',
@@ -13034,7 +13072,6 @@ wwv_flow_api.create_install_script(
 '    :new.updated_by := nvl(sys_context(''APEX$SESSION'',''APP_USER''),user);',
 'end code_review_agenda_biu;',
 '',
-'',
 '/',
 '',
 '',
@@ -13056,7 +13093,6 @@ wwv_flow_api.create_install_script(
 '    :new.updated_by := nvl(sys_context(''APEX$SESSION'',''APP_USER''),user);',
 'end code_review_precheck_biu;',
 '',
-'',
 '/',
 '',
 '',
@@ -13077,7 +13113,6 @@ wwv_flow_api.create_install_script(
 '    :new.updated := sysdate;',
 '    :new.updated_by := nvl(sys_context(''APEX$SESSION'',''APP_USER''),user);',
 'end code_review_goal_biu;',
-'',
 '',
 '/',
 '',
