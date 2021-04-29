@@ -92,7 +92,7 @@ create or replace function get_tenant_predicate(
 
 begin
     -- Only apply VPD to specific APEX applications
-    -- Change this statement as appropriate but note that it should be VERY FAST 
+    -- Change this "if condition" as appropriate but note that it should be VERY FAST 
     if sys_context('APEX$SESSION', 'APP_ID') in (*****, *****) then
         -- this predicate is optimized for performance
         -- N
