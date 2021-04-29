@@ -1,4 +1,5 @@
-Note: This sets up the application so that a user can set their tenant only once during a session because apex_session.set_tenant_id can only be used once in a session.
+Note: This sets up the application so that a user can set their tenant only once during a session 
+because apex_session.set_tenant_id can only be used once in a session.
 
 ----------------
 Prerequesites - You can use the following queries to determine if you meet the pre-reqs
@@ -29,6 +30,24 @@ This will return PASS if you have access. If it returns no rows, have your DBA r
 --
 grant execute on sys.dbms_rls to YOUR_SCHEMA;            
 --
+
+----------------
+Add a TENANT_ID column to every table you wish to apply VPD to. Set the TENANT_ID via a trigger or default value:
+
+--
+-- all existing records will have a tenant_id of -1
+alter table MY_TABLE add (tenant_id   number default on null nvl(sys_context('APEX$SESSION', 'APP_TENANT_ID'), -1) );  
+--
+
+or
+
+
+--
+...
+ :new.tenant_id := sys_context('APEX$SESSION', 'APP_TENANT_ID') ;
+...
+--
+
 
 ----------------
 Create and set a user preference: TENANT_ID
