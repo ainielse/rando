@@ -69,7 +69,7 @@ declare
     l_tenant_id varchar2(4000) := APEX_UTIL.GET_PREFERENCE(      
         p_preference => 'TENANT_ID');
 begin
-    if l_organization is not null then
+    if l_tenant_id is not null then
         apex_session.set_tenant_id (p_tenant_id => l_tenant_id);
     end if;
 end;
