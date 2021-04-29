@@ -1,0 +1,106 @@
+
+Note: This sets up the system so that a user can set their tenant only once. 
+Once set, it can never be changed by the user.
+
+----------------
+Prerequesites - You can use the following queries to determine if you meet the pre-reqs
+
+Check to ensure you are running Enterprise Edition of the database
+
+--
+select banner
+    from v$version;
+--
+This will have EE or Enterprise Edition in the name.
+
+Check to see if you have execute on the dbms_rls package.
+
+--
+select 'PASS'
+      from dual
+      where exists (
+        select 1
+          from user_tab_privs
+          where table_name = 'DBMS_RLS'
+            and owner = 'SYS'
+            and privilege = 'EXECUTE');
+--
+
+This will return PASS if you have access. If it returns no rows, have your DBA run the following statement:
+
+--
+grant execute on sys.dbms_rls to YOUR_SCHEMA;            
+--
+
+----------------
+Create and set a user preference: TENANT_ID
+Right after this preference gets set, run
+
+--
+apex_session.set_tenant_id (
+    p_tenant_id => APEX_UTIL.GET_PREFERENCE(      
+                      p_preference => 'TENANT_ID'));
+--
+
+
+----------------
+Create an application process - After Authentication
+
+--
+declare
+
+    l_tenant_id varchar2(4000) := APEX_UTIL.GET_PREFERENCE(      
+        p_preference => 'TENANT_ID');
+begin
+    if l_organization is not null then
+        apex_session.set_tenant_id (p_tenant_id => l_tenant_id);
+    end if;
+end;
+--
+
+
+----------------
+Create a function based upon the requirements of dbms_rls.add_policy.
+This function returns a "where clause."
+This function assumes your tables have a TENANT_ID column
+Replace ***** with your application ID(s).
+Note: I would NEVER just have a function. This should be part of a package.
+
+--
+create or replace function get_tenant_predicate(
+        object_schema IN VARCHAR2, 
+        object_name VARCHAR2) return varchar2 as
+
+        l_predicate varchar2(4000);
+
+begin
+    -- Only apply VPD to specific APEX applications
+    -- Change this statement as appropriate but note that it should be VERY FAST 
+    if sys_context('APEX$SESSION', 'APP_ID') in (*****, *****) then
+        -- this predicate is optimized for performance
+        -- N
+        l_predicate:= q'! tenant_id = sys_context('APEX$SESSION', 'APP_TENANT_ID') !';
+    end if;
+
+    return l_predicate;
+end get_tenant_predicate;
+--
+
+----------------
+For each table that you want to stripe via VPD, run the following block.
+
+--
+begin
+    dbms_rls.add_policy(
+      object_schema => 'MYSCHEMA',
+      object_name => 'MY_TABLE',
+      policy_name => 'MY_TABLE_VPD',
+      function_schema =>'MYSCHEMA',
+      policy_function => 'get_tenant_predicate',  -- note: this should be my_pkg.my_function
+      statement_types => null,
+      update_check  => true);
+
+    commit;  
+end;
+--
+
