@@ -1,6 +1,4 @@
-
-Note: This sets up the system so that a user can set their tenant only once. 
-Once set, it can never be changed by the user.
+Note: This sets up the application so that a user can set their tenant only once during a session because apex_session.set_tenant_id can only be used once in a session.
 
 ----------------
 Prerequesites - You can use the following queries to determine if you meet the pre-reqs
