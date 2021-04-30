@@ -106,7 +106,8 @@ begin
     -- Change this "if condition" as appropriate but note that it should be VERY FAST 
     if sys_context('APEX$SESSION', 'APP_ID') in (*****, *****) then
         -- this predicate is optimized for performance
-        -- N
+        -- Note the use of sys_context. This allows the query to be parsed once.
+        -- And sys_context values are in memory so it is very very fast.
         l_predicate:= q'! tenant_id = sys_context('APEX$SESSION', 'APP_TENANT_ID') !';
     end if;
 
