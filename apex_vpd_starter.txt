@@ -57,6 +57,7 @@ or
 ...
 --
 
+It's also a good idea to add an index to the tenant_id in every table as well.
 
 ----------------
 3. Create and set an APEX user preference: TENANT_ID
