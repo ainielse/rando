@@ -52,6 +52,7 @@ begin
                 and list_name = p_list_name
               start with list_entry_parent_id is null
               connect by prior list_entry_id = list_entry_parent_id
+              order by display_sequence
               ) loop
   
     l_start := instr(listRec.entry_target,':');
