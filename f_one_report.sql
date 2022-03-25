@@ -28,7 +28,7 @@ prompt APPLICATION 135060 - ait67 one report
 -- Application Export:
 --   Application:     135060
 --   Name:            ait67 one report
---   Date and Time:   19:59 Friday March 25, 2022
+--   Date and Time:   20:15 Friday March 25, 2022
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -114,7 +114,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ait67 one report'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325195925'
+,p_last_upd_yyyymmddhh24miss=>'20220325201452'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -14460,7 +14460,7 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325195925'
+,p_last_upd_yyyymmddhh24miss=>'20220325201303'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(102239720907227034768)
@@ -14483,9 +14483,9 @@ wwv_flow_api.create_page_plug(
 ,p_include_in_reg_disp_sel_yn=>'Y'
 ,p_query_type=>'FUNC_BODY_RETURNING_SQL'
 ,p_function_body_language=>'PLSQL'
-,p_plug_source=>'return ait67_one_report.get_query(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA );'
+,p_plug_source=>'return ait67_one_report.get_query(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA);'
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P2_TABLE_NAME,P2_SCHEMA'
+,p_ajax_items_to_submit=>'P2_TABLE_NAME'
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
@@ -14753,324 +14753,504 @@ wwv_flow_api.create_worksheet_column(
 ,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168373558485498821)
+ p_id=>wwv_flow_api.id(102074663287208943076)
 ,p_db_column_name=>'N1'
 ,p_display_order=>210
-,p_column_identifier=>'BJ'
-,p_column_label=>'N1'
-,p_column_type=>'STRING'
+,p_column_identifier=>'U'
+,p_column_label=>'&P2_NEW_21.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 21)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168373680335498822)
+ p_id=>wwv_flow_api.id(102074663430661943077)
 ,p_db_column_name=>'N2'
 ,p_display_order=>220
-,p_column_identifier=>'BK'
-,p_column_label=>'N2'
-,p_column_type=>'STRING'
+,p_column_identifier=>'V'
+,p_column_label=>'&P2_NEW_22.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 22)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168373740488498823)
+ p_id=>wwv_flow_api.id(102074663512707943078)
 ,p_db_column_name=>'N3'
 ,p_display_order=>230
-,p_column_identifier=>'BL'
-,p_column_label=>'N3'
-,p_column_type=>'STRING'
+,p_column_identifier=>'W'
+,p_column_label=>'&P2_NEW_23.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 23)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168373861089498824)
+ p_id=>wwv_flow_api.id(102074663623570943079)
 ,p_db_column_name=>'N4'
 ,p_display_order=>240
-,p_column_identifier=>'BM'
-,p_column_label=>'N4'
-,p_column_type=>'STRING'
+,p_column_identifier=>'X'
+,p_column_label=>'&P2_NEW_24.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 24)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168373964821498825)
+ p_id=>wwv_flow_api.id(102074663724338943080)
 ,p_db_column_name=>'N5'
 ,p_display_order=>250
-,p_column_identifier=>'BN'
-,p_column_label=>'N5'
-,p_column_type=>'STRING'
+,p_column_identifier=>'Y'
+,p_column_label=>'&P2_NEW_25.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 25)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374095997498826)
+ p_id=>wwv_flow_api.id(102074663795064943081)
 ,p_db_column_name=>'N6'
 ,p_display_order=>260
-,p_column_identifier=>'BO'
-,p_column_label=>'N6'
-,p_column_type=>'STRING'
+,p_column_identifier=>'Z'
+,p_column_label=>'&P2_NEW_26.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 26)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374153909498827)
+ p_id=>wwv_flow_api.id(102074663964357943082)
 ,p_db_column_name=>'N7'
 ,p_display_order=>270
-,p_column_identifier=>'BP'
-,p_column_label=>'N7'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AA'
+,p_column_label=>'&P2_NEW_27.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 27)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374257912498828)
+ p_id=>wwv_flow_api.id(102074664038148943083)
 ,p_db_column_name=>'N8'
 ,p_display_order=>280
-,p_column_identifier=>'BQ'
-,p_column_label=>'N8'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AB'
+,p_column_label=>'&P2_NEW_28.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 28)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374379863498829)
+ p_id=>wwv_flow_api.id(102074664150634943084)
 ,p_db_column_name=>'N9'
 ,p_display_order=>290
-,p_column_identifier=>'BR'
-,p_column_label=>'N9'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AC'
+,p_column_label=>'&P2_NEW_29.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 29)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374417506498830)
+ p_id=>wwv_flow_api.id(102074664274080943085)
 ,p_db_column_name=>'N10'
 ,p_display_order=>300
-,p_column_identifier=>'BS'
-,p_column_label=>'N10'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AD'
+,p_column_label=>'&P2_NEW_30.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 30)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374596830498831)
+ p_id=>wwv_flow_api.id(102074664358651943086)
 ,p_db_column_name=>'N11'
 ,p_display_order=>310
-,p_column_identifier=>'BT'
-,p_column_label=>'N11'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AE'
+,p_column_label=>'&P2_NEW_31.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 31)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374686384498832)
+ p_id=>wwv_flow_api.id(102074664451063943087)
 ,p_db_column_name=>'N12'
 ,p_display_order=>320
-,p_column_identifier=>'BU'
-,p_column_label=>'N12'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AF'
+,p_column_label=>'&P2_NEW_32.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 32)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374760681498833)
+ p_id=>wwv_flow_api.id(102074664534217943088)
 ,p_db_column_name=>'N13'
 ,p_display_order=>330
-,p_column_identifier=>'BV'
-,p_column_label=>'N13'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AG'
+,p_column_label=>'&P2_NEW_33.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 33)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374857760498834)
+ p_id=>wwv_flow_api.id(102074664680622943089)
 ,p_db_column_name=>'N14'
 ,p_display_order=>340
-,p_column_identifier=>'BW'
-,p_column_label=>'N14'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AH'
+,p_column_label=>'&P2_NEW_34.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 34)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168374981339498835)
+ p_id=>wwv_flow_api.id(102074664725746943090)
 ,p_db_column_name=>'N15'
 ,p_display_order=>350
-,p_column_identifier=>'BX'
-,p_column_label=>'N15'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AI'
+,p_column_label=>'&P2_NEW_35.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 35)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375051523498836)
+ p_id=>wwv_flow_api.id(102074664796502943091)
 ,p_db_column_name=>'N16'
 ,p_display_order=>360
-,p_column_identifier=>'BY'
-,p_column_label=>'N16'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AJ'
+,p_column_label=>'&P2_NEW_36.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 36)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375161389498837)
+ p_id=>wwv_flow_api.id(102074664983714943092)
 ,p_db_column_name=>'N17'
 ,p_display_order=>370
-,p_column_identifier=>'BZ'
-,p_column_label=>'N17'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AK'
+,p_column_label=>'&P2_NEW_37.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 37)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375229530498838)
+ p_id=>wwv_flow_api.id(102074665074586943093)
 ,p_db_column_name=>'N18'
 ,p_display_order=>380
-,p_column_identifier=>'CA'
-,p_column_label=>'N18'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AL'
+,p_column_label=>'&P2_NEW_38.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 38)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375364784498839)
+ p_id=>wwv_flow_api.id(102074665136773943094)
 ,p_db_column_name=>'N19'
 ,p_display_order=>390
-,p_column_identifier=>'CB'
-,p_column_label=>'N19'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AM'
+,p_column_label=>'&P2_NEW_39.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 39)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375434164498840)
+ p_id=>wwv_flow_api.id(102074665207958943095)
 ,p_db_column_name=>'N20'
 ,p_display_order=>400
-,p_column_identifier=>'CC'
-,p_column_label=>'N20'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AN'
+,p_column_label=>'&P2_NEW_40.'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 40)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375540505498841)
+ p_id=>wwv_flow_api.id(102074665303672943096)
 ,p_db_column_name=>'D1'
 ,p_display_order=>410
-,p_column_identifier=>'CD'
-,p_column_label=>'D1'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AO'
+,p_column_label=>'&P2_NEW_41.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 41)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375642935498842)
+ p_id=>wwv_flow_api.id(102074665426172943097)
 ,p_db_column_name=>'D2'
 ,p_display_order=>420
-,p_column_identifier=>'CE'
-,p_column_label=>'D2'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AP'
+,p_column_label=>'&P2_NEW_42.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 42)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375734356498843)
+ p_id=>wwv_flow_api.id(102074665579547943098)
 ,p_db_column_name=>'D3'
 ,p_display_order=>430
-,p_column_identifier=>'CF'
-,p_column_label=>'D3'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AQ'
+,p_column_label=>'&P2_NEW_43.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 43)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375878493498844)
+ p_id=>wwv_flow_api.id(102074665615739943099)
 ,p_db_column_name=>'D4'
 ,p_display_order=>440
-,p_column_identifier=>'CG'
-,p_column_label=>'D4'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AR'
+,p_column_label=>'&P2_NEW_44.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 44)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168375913053498845)
+ p_id=>wwv_flow_api.id(102074665741475943100)
 ,p_db_column_name=>'D5'
 ,p_display_order=>450
-,p_column_identifier=>'CH'
-,p_column_label=>'D5'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AS'
+,p_column_label=>'&P2_NEW_45.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 45)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168376024180498846)
+ p_id=>wwv_flow_api.id(102074665806085943101)
 ,p_db_column_name=>'D6'
 ,p_display_order=>460
-,p_column_identifier=>'CI'
-,p_column_label=>'D6'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AT'
+,p_column_label=>'&P2_NEW_46.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 46)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168376144757498847)
+ p_id=>wwv_flow_api.id(102074665931316943102)
 ,p_db_column_name=>'D7'
 ,p_display_order=>470
-,p_column_identifier=>'CJ'
-,p_column_label=>'D7'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AU'
+,p_column_label=>'&P2_NEW_47.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 47)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168376224518498848)
+ p_id=>wwv_flow_api.id(102239719405081034753)
 ,p_db_column_name=>'D8'
 ,p_display_order=>480
-,p_column_identifier=>'CK'
-,p_column_label=>'D8'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AV'
+,p_column_label=>'&P2_NEW_48.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 48)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168376363702498849)
+ p_id=>wwv_flow_api.id(102239719492608034754)
 ,p_db_column_name=>'D9'
 ,p_display_order=>490
-,p_column_identifier=>'CL'
-,p_column_label=>'D9'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AW'
+,p_column_label=>'&P2_NEW_49.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 49)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51168376407037498850)
+ p_id=>wwv_flow_api.id(102239719584695034755)
 ,p_db_column_name=>'D10'
 ,p_display_order=>500
-,p_column_identifier=>'CM'
-,p_column_label=>'D10'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AX'
+,p_column_label=>'&P2_NEW_50.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 50)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175291436224017501)
+ p_id=>wwv_flow_api.id(102239719749624034756)
 ,p_db_column_name=>'D11'
 ,p_display_order=>510
-,p_column_identifier=>'CN'
-,p_column_label=>'D11'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AY'
+,p_column_label=>'&P2_NEW_51.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 51)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175291508253017502)
+ p_id=>wwv_flow_api.id(102239719853150034757)
 ,p_db_column_name=>'D12'
 ,p_display_order=>520
-,p_column_identifier=>'CO'
-,p_column_label=>'D12'
-,p_column_type=>'STRING'
+,p_column_identifier=>'AZ'
+,p_column_label=>'&P2_NEW_52.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 52)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175291616487017503)
+ p_id=>wwv_flow_api.id(102239719947539034758)
 ,p_db_column_name=>'D13'
 ,p_display_order=>530
-,p_column_identifier=>'CP'
-,p_column_label=>'D13'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BA'
+,p_column_label=>'&P2_NEW_53.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 53)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175291749300017504)
+ p_id=>wwv_flow_api.id(102239719998513034759)
 ,p_db_column_name=>'D14'
 ,p_display_order=>540
-,p_column_identifier=>'CQ'
-,p_column_label=>'D14'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BB'
+,p_column_label=>'&P2_NEW_54.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 54)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175291814510017505)
+ p_id=>wwv_flow_api.id(102239720161163034760)
 ,p_db_column_name=>'D15'
 ,p_display_order=>550
-,p_column_identifier=>'CR'
-,p_column_label=>'D15'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BC'
+,p_column_label=>'&P2_NEW_55.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 55)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175291989160017506)
+ p_id=>wwv_flow_api.id(102239720187058034761)
 ,p_db_column_name=>'D16'
 ,p_display_order=>560
-,p_column_identifier=>'CS'
-,p_column_label=>'D16'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BD'
+,p_column_label=>'&P2_NEW_56.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 56)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175292087577017507)
+ p_id=>wwv_flow_api.id(102239720362385034762)
 ,p_db_column_name=>'D17'
 ,p_display_order=>570
-,p_column_identifier=>'CT'
-,p_column_label=>'D17'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BE'
+,p_column_label=>'&P2_NEW_57.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 57)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175292197447017508)
+ p_id=>wwv_flow_api.id(102239720411492034763)
 ,p_db_column_name=>'D18'
 ,p_display_order=>580
-,p_column_identifier=>'CU'
-,p_column_label=>'D18'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BF'
+,p_column_label=>'&P2_NEW_58.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 58)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175292210707017509)
+ p_id=>wwv_flow_api.id(102239720508392034764)
 ,p_db_column_name=>'D19'
 ,p_display_order=>590
-,p_column_identifier=>'CV'
-,p_column_label=>'D19'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BG'
+,p_column_label=>'&P2_NEW_59.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 59)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(51175292364650017510)
+ p_id=>wwv_flow_api.id(102239720659622034765)
 ,p_db_column_name=>'D20'
 ,p_display_order=>600
-,p_column_identifier=>'CW'
-,p_column_label=>'D20'
-,p_column_type=>'STRING'
+,p_column_identifier=>'BH'
+,p_column_label=>'&P2_NEW_60.'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+,p_display_condition_type=>'EXPRESSION'
+,p_display_condition=>'ait67_one_report.show_column(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA, p_column_number => 60)'
+,p_display_condition2=>'PLSQL'
 );
 wwv_flow_api.create_worksheet_rpt(
  p_id=>wwv_flow_api.id(102239732933014037520)
@@ -15079,7 +15259,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'510674227'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'VC1:VC2:VC3:VC4:VC5:VC6:VC7:VC8:VC9:VC10:VC11:VC12:VC13:VC14:VC15:VC16:VC17:VC18:VC19:VC20:N1:N2:N3:N4:N5:N6:N7:N8:N9:N10:N11:N12:N13:N14:N15:N16:N17:N18:N19:N20:D1:D2:D3:D4:D5:D6:D7:D8:D9:D10:D11:D12:D13:D14:D15:D16:D17:D18:D19:D20:'
+,p_report_columns=>'VC1:VC2:VC3:VC4:VC5:VC6:VC7:VC8:VC9:VC10:VC11:VC12:VC13:VC14:VC15:VC16:VC17:VC18:VC19:VC20:N1:N2:N3:N4:N5:N6:N7:N8:N9:N10:N11:N12:N13:N14:N15:N16:N17:N18:N19:N20:'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(153066946927214450860)
@@ -15157,6 +15337,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_01=>'NONE'
 ,p_attribute_02=>'N'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(102239685788147028480)
 ,p_name=>'P2_SQL'
@@ -15504,9 +15687,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(102239723249132034791)
 ,p_name=>'P2_NEW_22'
@@ -16110,8 +16290,8 @@ wwv_flow_api.create_page_da_action(
 ,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'ait67_one_report.set_IR_columns_headers(p_table_name        => :P2_TABLE_NAME,',
-'                                        p_base_item_name    => ''P2_NEW_'', ',
-'                                        p_schema_name       => :P2_SCHEMA);'))
+'                                        p_base_item_name    => ''P2_NEW_'',',
+'                                        p_schema_name => :P2_SCHEMA);'))
 ,p_attribute_02=>'P2_TABLE_NAME'
 ,p_attribute_05=>'PLSQL'
 ,p_wait_for_result=>'Y'
@@ -16432,28 +16612,33 @@ wwv_flow_api.create_install_script(
 ,p_sequence=>20
 ,p_script_type=>'INSTALL'
 ,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'1CREATE OR REPLACE EDITIONABLE PACKAGE "AIT67_ONE_REPORT" as',
+'CREATE OR REPLACE EDITIONABLE PACKAGE "AIT67_ONE_REPORT" as',
 '-- Note: this package is dependent upon the package ait67_one_report_macro',
+'-- Updated for multiple schemas',
 '',
 '--',
 '--',
-'function get_query(p_table_name         in varchar2) return clob;',
+'function get_query( p_table_name    in varchar2,',
+'                    p_schema_name   in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) return clob;',
 '',
 '--',
 '-- used for classic reports',
 'function get_headers(p_table_name   in varchar2,',
-'                     p_pretty_yn    in varchar2 default ''Y'') return varchar2;',
+'                     p_pretty_yn    in varchar2 default ''Y'',',
+'                     p_schema_name  in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) return varchar2;',
 '',
 '--',
 '--',
 'function show_column(   p_table_name        in varchar2,',
-'                        p_column_number     in number) return boolean;       ',
+'                        p_column_number     in number,',
+'                        p_schema_name   in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) return boolean;       ',
 '',
 '--',
 '-- used for Interactive Reports',
 'procedure set_IR_columns_headers(   p_table_name        in varchar2,',
 '                                    p_base_item_name    in varchar2,',
-'                                    p_pretty_yn         in varchar2 default ''Y'') ;  ',
+'                                    p_pretty_yn         in varchar2 default ''Y'',',
+'                                    p_schema_name   in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) ;  ',
 '',
 'end ait67_one_report;',
 '/',
@@ -16463,15 +16648,21 @@ wwv_flow_api.create_install_script(
 '',
 '--',
 '--',
-'function get_query(p_table_name         in varchar2) return clob is',
+'function get_query( p_table_name    in varchar2,',
+'                    p_schema_name   in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) return clob is',
 '',
 'l_query         clob;',
 'l_table_name    varchar2(4000) := nvl(p_table_name, ''DUAL'');',
+'',
 'begin',
 '',
 '    select  listagg(case ',
 '                when column_name is null',
-'                then ''null''',
+'                then case ',
+'                    when ct_val = ''NUMBER'' then ''to_number(null)''',
+'                    when ct_val = ''DATE'' then ''to_date(null)''',
+'                    else ''null''',
+'                    end',
 '                else sys.dbms_assert.enquote_name(column_name)',
 '                end',
 '            || '' '' ||',
@@ -16479,7 +16670,7 @@ wwv_flow_api.create_install_script(
 '            , '', '' || chr(13)  ',
 '                ) col_names',
 '        into l_query',
-'        from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name)',
+'        from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name, p_schema_name => p_schema_name)',
 '        order by alias_rn ;',
 '',
 '',
@@ -16492,7 +16683,8 @@ wwv_flow_api.create_install_script(
 '--',
 '--',
 'function get_headers(p_table_name   in varchar2,',
-'                     p_pretty_yn    in varchar2 default ''Y'') return varchar2 is',
+'                     p_pretty_yn    in varchar2 default ''Y'',',
+'                     p_schema_name  in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) return varchar2 is',
 '',
 'l_headers       varchar2(4000);',
 'l_table_name    varchar2(4000) := nvl(p_table_name, ''DUAL'');',
@@ -16507,7 +16699,7 @@ wwv_flow_api.create_install_script(
 '                    end    ',
 '                , column_alias),'':'') col_headers',
 '    into l_headers',
-'    from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name) ',
+'    from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name, p_schema_name => p_schema_name) ',
 '    order by alias_rn;',
 '',
 '    return l_headers;',
@@ -16517,16 +16709,21 @@ wwv_flow_api.create_install_script(
 '--',
 '--',
 'function show_column(   p_table_name        in varchar2,',
-'                        p_column_number     in number) return boolean is',
+'                        p_column_number     in number,',
+'                        p_schema_name       in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) return boolean is',
 '',
 'l_count         number;                        ',
 'l_table_name    varchar2(4000) := nvl(p_table_name, ''DUAL'');',
 '',
 'begin',
 '',
+'    if l_table_name = ''DUAL'' then',
+'        return true;',
+'    end if;',
+'',
 '    select count(*)',
 '      into l_count',
-'      from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name) ',
+'      from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name, p_schema_name => p_schema_name) ',
 '      where alias_rn = p_column_number',
 '        and column_name is not null',
 '        and rownum = 1;',
@@ -16539,13 +16736,14 @@ wwv_flow_api.create_install_script(
 '--',
 'procedure set_IR_columns_headers(   p_table_name        in varchar2,',
 '                                    p_base_item_name    in varchar2,',
-'                                    p_pretty_yn         in varchar2 default ''Y'') is',
+'                                    p_pretty_yn         in varchar2 default ''Y'',',
+'                                    p_schema_name       in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) is',
 '',
 'l_header        varchar2(4000);',
 'l_table_name    varchar2(4000) := nvl(p_table_name, ''DUAL'');',
 'begin',
 '    for i in (select alias_rn, column_name, column_alias',
-'              from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name)',
+'              from ait67_one_report_macro.user_tab_col_macro(p_table_name => l_table_name, p_schema_name => p_schema_name)',
 '              order by alias_rn',
 '              ) loop',
 '',
