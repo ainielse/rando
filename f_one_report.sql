@@ -28,7 +28,7 @@ prompt APPLICATION 135060 - ait67 one report
 -- Application Export:
 --   Application:     135060
 --   Name:            ait67 one report
---   Date and Time:   19:38 Friday March 25, 2022
+--   Date and Time:   19:48 Friday March 25, 2022
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -114,7 +114,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ait67 one report'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325192339'
+,p_last_upd_yyyymmddhh24miss=>'20220325194627'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -14460,7 +14460,7 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325191828'
+,p_last_upd_yyyymmddhh24miss=>'20220325194627'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(102239720907227034768)
@@ -14485,7 +14485,7 @@ wwv_flow_api.create_page_plug(
 ,p_function_body_language=>'PLSQL'
 ,p_plug_source=>'return ait67_one_report.get_query(p_table_name => :P2_TABLE_NAME, p_schema_name => :P2_SCHEMA );'
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P2_TABLE_NAME'
+,p_ajax_items_to_submit=>'P2_TABLE_NAME,P2_SCHEMA'
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
