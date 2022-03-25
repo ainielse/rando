@@ -28,7 +28,7 @@ prompt APPLICATION 135060 - ait67 one report
 -- Application Export:
 --   Application:     135060
 --   Name:            ait67 one report
---   Date and Time:   19:48 Friday March 25, 2022
+--   Date and Time:   19:59 Friday March 25, 2022
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -114,7 +114,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ait67 one report'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325194627'
+,p_last_upd_yyyymmddhh24miss=>'20220325195925'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -14460,7 +14460,7 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325194627'
+,p_last_upd_yyyymmddhh24miss=>'20220325195925'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(102239720907227034768)
@@ -15079,7 +15079,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'510674227'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'VC1:VC2:VC3:VC4:VC5:VC6:VC7:VC8:VC9:VC10:VC11:VC12:VC13:VC14:VC15:VC16:VC17:VC18:VC19:VC2001234567890'
+,p_report_columns=>'VC1:VC2:VC3:VC4:VC5:VC6:VC7:VC8:VC9:VC10:VC11:VC12:VC13:VC14:VC15:VC16:VC17:VC18:VC19:VC20:N1:N2:N3:N4:N5:N6:N7:N8:N9:N10:N11:N12:N13:N14:N15:N16:N17:N18:N19:N20:D1:D2:D3:D4:D5:D6:D7:D8:D9:D10:D11:D12:D13:D14:D15:D16:D17:D18:D19:D20:'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(153066946927214450860)
