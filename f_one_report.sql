@@ -28,12 +28,13 @@ prompt APPLICATION 135060 - ait67 one report
 -- Application Export:
 --   Application:     135060
 --   Name:            ait67 one report
---   Date and Time:   20:15 Friday March 25, 2022
+--   Date and Time:   17:41 Wednesday March 30, 2022
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                      4
 --       Items:                   70
+--       Computations:             1
 --       Processes:                4
 --       Regions:                  8
 --       Buttons:                  1
@@ -114,7 +115,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ait67 one report'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325201452'
+,p_last_upd_yyyymmddhh24miss=>'20220330174047'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -14460,7 +14461,7 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20220325201303'
+,p_last_upd_yyyymmddhh24miss=>'20220330173947'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(102239720907227034768)
@@ -16272,6 +16273,17 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
+wwv_flow_api.create_page_computation(
+ p_id=>wwv_flow_api.id(51175294139124017528)
+,p_computation_sequence=>10
+,p_computation_item=>'P2_SCHEMA'
+,p_computation_point=>'BEFORE_HEADER'
+,p_computation_type=>'EXPRESSION'
+,p_computation_language=>'PLSQL'
+,p_computation=>'sys_context(''USERENV'',''CURRENT_USER'')'
+,p_compute_when=>'P2_SCHEMA'
+,p_compute_when_type=>'ITEM_IS_NULL'
+);
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(102239686774391028488)
 ,p_name=>'Change Table'
@@ -16543,20 +16555,7 @@ wwv_flow_api.create_install_script(
 'function user_tab_col_macro(p_table_name    in  varchar2,',
 '                            p_schema_name   in  varchar2 default sys_context(''USERENV'', ''CURRENT_USER'')) return varchar2 SQL_MACRO is',
 '',
-'l_all_or_user   varchar2(400);',
-'l_extra_where   varchar2(400);',
-'',
 'begin',
-'',
-'    -- for performace, it is better to use user_tab_cols if it is the same schema',
-'    case ',
-'        when p_schema_name = sys_context(''USERENV'', ''CURRENT_USER'') then ',
-'            l_all_or_user := ''user_tab_cols'';',
-'            l_extra_where := null;',
-'        else ',
-'            l_all_or_user := ''all_tab_cols'';',
-'            l_extra_where := '' and owner = user_tab_col_macro.p_schema_name '';',
-'        end case;',
 '',
 '    return q''~with cols as (',
 '            select row_number() over (order by ct.column_value desc, nums.column_value asc) alias_rn,',
@@ -16576,9 +16575,9 @@ wwv_flow_api.create_install_script(
 '            left outer join (',
 '                            select table_name, column_name, data_type, column_id,',
 '                                row_number() over (partition by table_name, data_type order by column_id) rn',
-'                            from ~'' || l_all_or_user || q''~',
-'                            where table_name = user_tab_col_macro.p_table_name ~''',
-'                            || l_extra_where || q''~',
+'                            from all_tab_cols',
+'                            where table_name = user_tab_col_macro.p_table_name ',
+'                              and owner = user_tab_col_macro.p_schema_name ',
 '                            ) utc ',
 '                on utc.rn = cols.nums_val',
 '                and utc.data_type = cols.ct_val ~'';',
