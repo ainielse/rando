@@ -28,7 +28,7 @@ prompt APPLICATION 116729 - ait99 - GPT-3
 -- Application Export:
 --   Application:     116729
 --   Name:            ait99 - GPT-3
---   Date and Time:   13:35 Friday February 10, 2023
+--   Date and Time:   14:00 Friday February 10, 2023
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -155,6 +155,9 @@ wwv_imp_workspace.create_credential(
 ''))
 ,p_prompt_on_install=>true
 ,p_credential_comment=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'Credential Name is ',
+'Authorization',
+'',
 'Secret is',
 'Bearer blah-bla-bl-blah'))
 );
