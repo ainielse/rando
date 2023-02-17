@@ -28,7 +28,7 @@ prompt APPLICATION 116729 - ait99 - GPT-3
 -- Application Export:
 --   Application:     116729
 --   Name:            ait99 - GPT-3
---   Date and Time:   15:01 Friday February 17, 2023
+--   Date and Time:   15:34 Friday February 17, 2023
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -113,7 +113,7 @@ wwv_flow_imp.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ait99 - GPT3'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20230217145643'
+,p_last_upd_yyyymmddhh24miss=>'20230217153303'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_print_server_type=>'INSTANCE'
@@ -14447,7 +14447,7 @@ wwv_flow_imp_page.create_page(
 ,p_protection_level=>'C'
 ,p_page_component_map=>'03'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20230217145302'
+,p_last_upd_yyyymmddhh24miss=>'20230217153303'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(124877799386351397099)
@@ -14584,6 +14584,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_prompt=>'Temp'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
+,p_begin_on_new_line=>'N'
 ,p_colspan=>2
 ,p_field_template=>wwv_flow_imp.id(101424914186420892038)
 ,p_item_template_options=>'#DEFAULT#'
