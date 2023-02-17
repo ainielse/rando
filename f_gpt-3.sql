@@ -14,7 +14,7 @@ whenever sqlerror exit sql.sqlcode rollback
 begin
 wwv_flow_imp.import_begin (
  p_version_yyyy_mm_dd=>'2022.10.07'
-,p_release=>'22.2.0'
+,p_release=>'22.2.2'
 ,p_default_workspace_id=>113067632160437694
 ,p_default_application_id=>116729
 ,p_default_id_offset=>50713870430997487770
@@ -28,12 +28,12 @@ prompt APPLICATION 116729 - ait99 - GPT-3
 -- Application Export:
 --   Application:     116729
 --   Name:            ait99 - GPT-3
---   Date and Time:   14:00 Friday February 10, 2023
+--   Date and Time:   15:01 Friday February 17, 2023
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                      4
---       Items:                    4
+--       Items:                    5
 --       Processes:                4
 --       Regions:                  5
 --       Buttons:                  2
@@ -46,7 +46,7 @@ prompt APPLICATION 116729 - ait99 - GPT-3
 --         Breadcrumbs:            1
 --           Entries:              2
 --       Security:
---         Authentication:         1
+--         Authentication:         2
 --         Authorization:          1
 --       User Interface:
 --         Themes:                 1
@@ -65,7 +65,7 @@ prompt APPLICATION 116729 - ait99 - GPT-3
 --       Reports:
 --       E-Mail:
 --     Supporting Objects:  Included
---   Version:         22.2.0
+--   Version:         22.2.2
 --   Instance ID:     63113759365424
 --
 
@@ -95,7 +95,7 @@ wwv_flow_imp.create_flow(
 ,p_direction_right_to_left=>'N'
 ,p_flow_image_prefix => nvl(wwv_flow_application_install.get_image_prefix,'')
 ,p_authentication=>'PLUGIN'
-,p_authentication_id=>wwv_flow_imp.id(101424737547697891962)
+,p_authentication_id=>wwv_flow_imp.id(53924137340627522752)
 ,p_application_tab_set=>1
 ,p_logo_type=>'T'
 ,p_logo_text=>'ait99 - GPT3'
@@ -113,7 +113,7 @@ wwv_flow_imp.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'ait99 - GPT3'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20230210133442'
+,p_last_upd_yyyymmddhh24miss=>'20230217145643'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_print_server_type=>'INSTANCE'
@@ -262,9 +262,17 @@ wwv_flow_imp_shared.create_web_source_operation(
 ,p_operation=>'POST'
 ,p_database_operation=>'FETCH_COLLECTION'
 ,p_url_pattern=>'.'
-,p_request_body_template=>'{"prompt": "#PROMPT#", "model": "text-davinci-003","temperature":0.7,"max_tokens":2000}'
+,p_request_body_template=>'{"prompt": "#PROMPT#", "model": "text-davinci-003","temperature":#TEMP#,"max_tokens":2000}'
 ,p_force_error_for_http_404=>false
 ,p_allow_fetch_all_rows=>false
+);
+wwv_flow_imp_shared.create_web_source_param(
+ p_id=>wwv_flow_imp.id(53670893747673551256)
+,p_web_src_module_id=>wwv_flow_imp.id(101425277983383902900)
+,p_web_src_operation_id=>wwv_flow_imp.id(101425278300494902901)
+,p_name=>'TEMP'
+,p_param_type=>'BODY'
+,p_value=>'0.7'
 );
 wwv_flow_imp_shared.create_web_source_param(
  p_id=>wwv_flow_imp.id(101425278651592902902)
@@ -14352,6 +14360,17 @@ begin
 null;
 end;
 /
+prompt --application/shared_components/security/authentications/opendoor
+begin
+wwv_flow_imp_shared.create_authentication(
+ p_id=>wwv_flow_imp.id(53924137340627522752)
+,p_name=>'OpenDoor'
+,p_scheme_type=>'NATIVE_OPEN_DOOR'
+,p_use_secure_cookie_yn=>'N'
+,p_ras_mode=>0
+);
+end;
+/
 prompt --application/shared_components/security/authentications/oracle_apex_accounts
 begin
 wwv_flow_imp_shared.create_authentication(
@@ -14396,17 +14415,18 @@ wwv_flow_imp_page.create_page(
 ,p_protection_level=>'C'
 ,p_page_component_map=>'13'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20230210130607'
+,p_last_upd_yyyymmddhh24miss=>'20230217145643'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(101424956701530892064)
 ,p_plug_name=>'ait99 - GPT3'
 ,p_region_template_options=>'#DEFAULT#'
-,p_escape_on_http_output=>'Y'
 ,p_plug_template=>wwv_flow_imp.id(101424807560172891993)
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'REGION_POSITION_01'
+,p_plug_source=>'This app was created during AIT 99. Check it out here: <a href="https://www.youtube.com/watch?v=wDmngdO5lDw" target="_blank">https://www.youtube.com/watch?v=wDmngdO5lDw</a>'
 ,p_plug_query_num_rows=>15
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
 ,p_region_image=>'#APP_FILES#icons/app-icon-512.png'
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
@@ -14427,7 +14447,7 @@ wwv_flow_imp_page.create_page(
 ,p_protection_level=>'C'
 ,p_page_component_map=>'03'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20230210133442'
+,p_last_upd_yyyymmddhh24miss=>'20230217145302'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(124877799386351397099)
@@ -14463,7 +14483,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_location=>'WEB_SOURCE'
 ,p_web_src_module_id=>wwv_flow_imp.id(101425277983383902900)
 ,p_ajax_enabled=>'Y'
-,p_ajax_items_to_submit=>'P13_PROMPT'
+,p_ajax_items_to_submit=>'P13_PROMPT,P13_TEMP'
 ,p_lazy_loading=>false
 ,p_query_row_template=>wwv_flow_imp.id(101424881665241892023)
 ,p_query_num_rows=>50
@@ -14483,9 +14503,11 @@ wwv_flow_imp_page.create_report_columns(
 ,p_column_alias=>'TEXT'
 ,p_column_display_sequence=>1
 ,p_column_heading=>'Text'
-,p_use_as_row_header=>'N'
 ,p_heading_alignment=>'LEFT'
 ,p_disable_sort_column=>'N'
+,p_display_as=>'RICH_TEXT'
+,p_attribute_01=>'MARKDOWN'
+,p_derived_column=>'N'
 ,p_include_in_export=>'Y'
 );
 wwv_flow_imp_page.create_report_columns(
@@ -14516,6 +14538,14 @@ wwv_flow_imp_page.create_report_columns(
 ,p_derived_column=>'N'
 );
 wwv_flow_imp_shared.create_web_source_comp_param(
+ p_id=>wwv_flow_imp.id(53670894614411551264)
+,p_page_id=>13
+,p_web_src_param_id=>wwv_flow_imp.id(53670893747673551256)
+,p_page_plug_id=>wwv_flow_imp.id(151720280993116585144)
+,p_value_type=>'ITEM'
+,p_value=>'P13_TEMP'
+);
+wwv_flow_imp_shared.create_web_source_comp_param(
  p_id=>wwv_flow_imp.id(101425070345017902888)
 ,p_page_id=>13
 ,p_web_src_param_id=>wwv_flow_imp.id(101425279230540902904)
@@ -14534,7 +14564,7 @@ wwv_flow_imp_shared.create_web_source_comp_param(
 );
 wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(101425068856986902883)
-,p_button_sequence=>20
+,p_button_sequence=>30
 ,p_button_plug_id=>wwv_flow_imp.id(124877799386351397099)
 ,p_button_name=>'GO'
 ,p_button_action=>'DEFINED_BY_DA'
@@ -14545,15 +14575,33 @@ wwv_flow_imp_page.create_page_button(
 ,p_grid_new_row=>'Y'
 );
 wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(23452732023483494224)
+,p_name=>'P13_TEMP'
+,p_is_required=>true
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(124877799386351397099)
+,p_item_default=>'0.7'
+,p_prompt=>'Temp'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
+,p_colspan=>2
+,p_field_template=>wwv_flow_imp.id(101424914186420892038)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'BOTH'
+);
+wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(101425069320816902884)
 ,p_name=>'P13_PROMPT'
 ,p_item_sequence=>10
 ,p_item_plug_id=>wwv_flow_imp.id(124877799386351397099)
-,p_item_default=>'What is 2+2?'
-,p_prompt=>'Prompt'
+,p_item_default=>'What is the Tufts mascot?'
+,p_prompt=>'Ask me a question, any question.'
 ,p_display_as=>'NATIVE_TEXTAREA'
 ,p_cSize=>30
-,p_cHeight=>3
+,p_cHeight=>5
 ,p_field_template=>wwv_flow_imp.id(101424914186420892038)
 ,p_item_template_options=>'#DEFAULT#'
 ,p_attribute_01=>'Y'
@@ -14599,7 +14647,7 @@ wwv_flow_imp_page.create_page(
 ,p_protection_level=>'C'
 ,p_page_component_map=>'12'
 ,p_last_updated_by=>'ANTON'
-,p_last_upd_yyyymmddhh24miss=>'20230210130607'
+,p_last_upd_yyyymmddhh24miss=>'20230217145321'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(101424949635391892059)
@@ -14632,19 +14680,17 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P9999_USERNAME'
 ,p_item_sequence=>10
 ,p_item_plug_id=>wwv_flow_imp.id(101424949635391892059)
-,p_prompt=>'Username'
+,p_prompt=>'You Email Address'
 ,p_placeholder=>'Username'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>40
 ,p_cMaxlength=>100
-,p_label_alignment=>'RIGHT'
 ,p_field_template=>wwv_flow_imp.id(101424913907497892038)
 ,p_item_icon_css_classes=>'fa-user'
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'N'
-,p_attribute_03=>'N'
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'NONE'
 );
