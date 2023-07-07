@@ -87,6 +87,7 @@ wwv_flow_imp_shared.create_plugin(
 ,p_substitute_attributes=>true
 ,p_subscribe_plugin_settings=>true
 ,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'Use this query:<br /><pre>',  
 'with my_list as (',
 'select plist.list_entry_id,',
 '       plist.entry_text  label,',
@@ -132,7 +133,8 @@ wwv_flow_imp_shared.create_plugin(
 '        or my_list.entry_target like  ''f?p='' || :APP_ID || '':'' || :app_page_id || '':%''                 ',
 '        )    ',
 '    connect by nocycle  my_list.list_entry_id = prior my_list.list_entry_parent_id   ',
-'    order by level desc'))
+'    order by level desc',
+'</pre>'))
 ,p_version_identifier=>'1.0'
 ,p_files_version=>6
 );
