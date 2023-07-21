@@ -33,7 +33,7 @@ prompt APPLICATION 238295 - AIT114
 -- Application Export:
 --   Application:     238295
 --   Name:            AIT114
---   Date and Time:   15:30 Friday July 21, 2023
+--   Date and Time:   16:30 Friday July 21, 2023
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Component Export
@@ -86,6 +86,7 @@ wwv_flow_imp_shared.create_plugin(
 '  ',
 '    l_bc_rec            apex_application_temp_bc%rowtype;',
 '    l_target            varchar2(4000);',
+'    l_label             varchar2(4000);',
 '',
 'begin',
 '    ',
@@ -165,6 +166,7 @@ wwv_flow_imp_shared.create_plugin(
 '        ) loop',
 '',
 '        l_target := apex_util.prepare_url(apex_plugin_util.replace_substitutions(p_value => page_rec.target ));',
+'        l_label  := apex_util.prepare_url(apex_plugin_util.replace_substitutions(p_value => page_rec.label ));',
 '',
 '        if apex_plugin_util.is_component_used (',
 '                    p_build_option_id           => page_rec.build_option_id,',
@@ -174,12 +176,12 @@ wwv_flow_imp_shared.create_plugin(
 '                    p_condition_expression2     => page_rec.condition_expression2) then',
 '            if page_rec.the_level = 1 then',
 '                sys.htp.p(do_substitutions( p_string        => l_bc_rec.current_page_option,',
-'                                        p_name          => page_rec.label,',
+'                                        p_name          => l_label,',
 '                                        p_link          => l_target,',
 '                                        p_css_classes   => l_css_classes));',
 '            elsif page_rec.the_level <= to_number(l_max_levels) then',
 '                sys.htp.p(do_substitutions( p_string        => l_bc_rec.non_current_page_option,',
-'                                        p_name          => page_rec.label,',
+'                                        p_name          => l_label,',
 '                                        p_link          => l_target,',
 '                                        p_css_classes   => l_css_classes));',
 '',
