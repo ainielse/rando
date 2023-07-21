@@ -33,7 +33,7 @@ prompt APPLICATION 238295 - AIT114
 -- Application Export:
 --   Application:     238295
 --   Name:            AIT114
---   Date and Time:   17:00 Thursday July 20, 2023
+--   Date and Time:   13:59 Friday July 21, 2023
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Component Export
@@ -88,7 +88,7 @@ wwv_flow_imp_shared.create_plugin(
 '    l_target            varchar2(4000);',
 '',
 'begin',
-'',
+'    ',
 '    --debug',
 '    if apex_application.g_debug then',
 '        apex_debug.message(''Super Breadcrumb: render_from_nav_menu'');',
@@ -204,12 +204,13 @@ wwv_flow_imp_shared.create_plugin(
 '    c_region_static_id  constant varchar2(255)  := apex_escape.html_attribute( p_region.static_id );',
 '',
 '',
-'    l_max_levels        p_region.attribute_01%type := p_region.attribute_01;',
-'    l_nav_or_collection p_region.attribute_02%type := p_region.attribute_02;',
-'    l_collection_name   p_region.attribute_03%type := p_region.attribute_03;',
-'    l_css_classes       p_region.attribute_04%type := p_region.attribute_04;',
-'    l_rewind_method     p_region.attribute_05%type := p_region.attribute_05;',
-'    l_no_rewind_page_list  p_region.attribute_06%type := p_region.attribute_06;',
+'    l_max_levels            p_region.attribute_01%type := p_region.attribute_01;',
+'    l_nav_or_collection     p_region.attribute_02%type := p_region.attribute_02;',
+'    l_collection_name       p_region.attribute_03%type := p_region.attribute_03;',
+'    l_css_classes           p_region.attribute_04%type := p_region.attribute_04;',
+'    l_rewind_method         p_region.attribute_05%type := p_region.attribute_05;',
+'    l_no_rewind_page_list   p_region.attribute_06%type := p_region.attribute_06;',
+'    l_only_link_pages       p_region.attribute_08%type := p_region.attribute_08;',
 '    l_max_seq_id        number;',
 '    l_latest_app_id     number;',
 '    l_latest_page_id    number;',
@@ -222,7 +223,7 @@ wwv_flow_imp_shared.create_plugin(
 '    l_title             varchar2(4000);',
 '    l_page_mode         varchar2(4000);',
 '    l_rewind_id         number;',
-'',
+'    l_url               varchar2(4000);',
 '    l_javascript        clob :=',
 '''',
 'apex.server.plugin (',
@@ -235,7 +236,6 @@ wwv_flow_imp_shared.create_plugin(
 ''';    ',
 '',
 'begin',
-'',
 '    --debug',
 '    if apex_application.g_debug then',
 '        apex_debug.message(''Super Breadcrumb: render_from_nav_menu'');',
@@ -348,10 +348,10 @@ wwv_flow_imp_shared.create_plugin(
 '                        );',
 '',
 '        for page_rec in (',
-'            select c001     link_target,',
-'                   c002     link_label,',
-'                   n001     app_id,',
-'                   n002     page_id,',
+'            select c001                     link_target,',
+'                   c002                     link_label,',
+'                   n001                     app_id,',
+'                   n002                     page_id,',
 '                   row_number() over (order by seq_id desc) rn,',
 '                   seq_id',
 '              from apex_collections ac',
@@ -359,11 +359,17 @@ wwv_flow_imp_shared.create_plugin(
 '              order by seq_id',
 '            ) loop',
 '',
+'            if  instr('','' || l_only_link_pages ||'',''  ,'','' || page_rec.page_id ||'','' ) = 0 then',
+'                l_url := page_rec.link_target;',
+'            else',
+'                l_url := apex_page.get_url(p_application => :APP_ID, p_page => page_rec.page_id);',
+'            end if;',
+'',
 '            if page_rec.rn - l_minus_if_reload < l_max_levels then',
 '                if page_rec.seq_id != l_max_seq_id or l_show_latest_page then',
-'                    sys.htp.p(do_substitutions( p_string     => l_bc_rec.non_current_page_option,',
-'                                                p_name       => page_rec.link_label,',
-'                                                p_link       => page_rec.link_target,',
+'                    sys.htp.p(do_substitutions( p_string        => l_bc_rec.non_current_page_option,',
+'                                                p_name          => page_rec.link_label,',
+'                                                p_link          => l_url,',
 '                                                p_css_classes   => l_css_classes));',
 '',
 '                    sys.htp.p(l_bc_rec.between_levels);',
@@ -371,10 +377,12 @@ wwv_flow_imp_shared.create_plugin(
 '            end if;',
 '        end loop;    ',
 '        ',
+'        l_url := owa_util.get_cgi_env(''X_APEX_PATH'') ;',
+'',
 '        sys.htp.p(do_substitutions( p_string     => l_bc_rec.current_page_option,',
-'                                p_name       => l_title,',
-'                                p_link       => null,',
-'                                p_css_classes   => l_css_classes));',
+'                                    p_name       => l_title,',
+'                                    p_link       => l_url,',
+'                                    p_css_classes   => l_css_classes));                        ',
 '',
 '        sys.htp.p(l_bc_rec.after_last);',
 '',
@@ -434,6 +442,7 @@ wwv_flow_imp_shared.create_plugin(
 '    l_max_levels        p_region.attribute_01%type := p_region.attribute_01;',
 '    l_nav_or_collection p_region.attribute_02%type := p_region.attribute_02;',
 '    l_collection_name   p_region.attribute_03%type := p_region.attribute_03;',
+'    l_no_add_pages      p_region.attribute_07%type := p_region.attribute_07;',
 '',
 '    l_latest_url        varchar2(4000);',
 '',
@@ -445,29 +454,34 @@ wwv_flow_imp_shared.create_plugin(
 '                                       p_region => p_region);',
 '    end if;',
 '',
-'    if not apex_collection.collection_exists(l_collection_name) then',
-'        apex_collection.create_collection(l_collection_name);',
-'    end if;',
-'          ',
-'    begin      ',
-'        select c001',
-'            into l_latest_url',
-'          from apex_collections ac',
-'          where ac.collection_name = l_collection_name',
-'            and ac.seq_id = (select max(ac2.seq_id) ',
-'                                from apex_collections ac2',
-'                                where ac2.collection_name = l_collection_name );',
-'    exception when no_data_found then null;',
-'    end;                            ',
+'    if  instr('','' || l_no_add_pages ||'',''  ,'','' ||:APP_PAGE_ID ||'','' )  = 0 then',
 '',
-'    if l_url != l_latest_url or l_latest_url is null then                        ',
+'        if not apex_collection.collection_exists(l_collection_name) then',
+'            apex_collection.create_collection(l_collection_name);',
+'        end if;',
+'              ',
+'        begin      ',
+'            select c001',
+'              into l_latest_url',
+'              from apex_collections ac',
+'              where ac.collection_name = l_collection_name',
+'                and ac.seq_id = (select max(ac2.seq_id) ',
+'                                    from apex_collections ac2',
+'                                    where ac2.collection_name = l_collection_name ',
+'                                      and ac2.n001 = :APP_ID);',
+'        exception when no_data_found then null;',
+'        end;                            ',
 '',
-'        apex_collection.add_member(',
-'            p_collection_name => l_collection_name,',
-'            p_c001            => l_url,',
-'            p_c002            => l_title,',
-'            p_n001            => :APP_ID,',
-'            p_n002            => :APP_PAGE_ID);',
+'        if l_url != l_latest_url or l_latest_url is null then                        ',
+'',
+'            apex_collection.add_member(',
+'                p_collection_name => l_collection_name,',
+'                p_c001            => l_url,',
+'                p_c002            => l_title,',
+'                p_n001            => :APP_ID,',
+'                p_n002            => :APP_PAGE_ID);',
+'        end if;',
+'',
 '    end if;',
 '',
 '    --sys.htp.p(''{success: true}'');',
@@ -505,6 +519,18 @@ wwv_flow_imp_shared.create_plugin(
 '</pre>',
 '</p>'))
 ,p_version_identifier=>'1.0'
+);
+wwv_flow_imp_shared.create_plugin_attr_group(
+ p_id=>wwv_flow_imp.id(41889105334325775340)
+,p_plugin_id=>wwv_flow_imp.id(41102684474522359831)
+,p_title=>'Rewind Options'
+,p_display_sequence=>100
+);
+wwv_flow_imp_shared.create_plugin_attr_group(
+ p_id=>wwv_flow_imp.id(41904478398362022267)
+,p_plugin_id=>wwv_flow_imp.id(41102684474522359831)
+,p_title=>'History Options'
+,p_display_sequence=>50
 );
 wwv_flow_imp_shared.create_plugin_attribute(
  p_id=>wwv_flow_imp.id(41113386826593585929)
@@ -644,7 +670,7 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_display_sequence=>20
 ,p_prompt=>'Breadcrumb Source'
 ,p_attribute_type=>'SELECT LIST'
-,p_is_required=>false
+,p_is_required=>true
 ,p_default_value=>'NAV'
 ,p_is_translatable=>false
 ,p_lov_type=>'STATIC'
@@ -674,13 +700,14 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_display_sequence=>30
 ,p_prompt=>'Collection Name'
 ,p_attribute_type=>'TEXT'
-,p_is_required=>false
+,p_is_required=>true
 ,p_default_value=>'INSUM_SUPER_BREADCRUMB'
 ,p_is_translatable=>false
 ,p_depending_on_attribute_id=>wwv_flow_imp.id(41114389687182603418)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'COLLECTION'
+,p_attribute_group_id=>wwv_flow_imp.id(41904478398362022267)
 ,p_help_text=>'Enter the name of the collection to store page view history.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
@@ -711,6 +738,7 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'COLLECTION'
 ,p_lov_type=>'STATIC'
+,p_attribute_group_id=>wwv_flow_imp.id(41889105334325775340)
 ,p_help_text=>'Indicate if and how the breadcrumb should rewind.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
@@ -722,14 +750,6 @@ wwv_flow_imp_shared.create_plugin_attr_value(
 ,p_help_text=>'Do not rewind. This will show the most recent n pages viewed where n is the "Max Levels" setting above.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(41243037129904490164)
-,p_plugin_attribute_id=>wwv_flow_imp.id(41242100786971334824)
-,p_display_sequence=>10
-,p_display_value=>'Matching Page ID and Title'
-,p_return_value=>'PAGE_AND_TITLE'
-,p_help_text=>'Rewind if the Page ID and title match anything in the tree.'
-);
-wwv_flow_imp_shared.create_plugin_attr_value(
  p_id=>wwv_flow_imp.id(41248254581120539226)
 ,p_plugin_attribute_id=>wwv_flow_imp.id(41242100786971334824)
 ,p_display_sequence=>20
@@ -737,13 +757,21 @@ wwv_flow_imp_shared.create_plugin_attr_value(
 ,p_return_value=>'PAGE'
 ,p_help_text=>'Rewind if the Page ID matches anything in the tree.'
 );
+wwv_flow_imp_shared.create_plugin_attr_value(
+ p_id=>wwv_flow_imp.id(41243037129904490164)
+,p_plugin_attribute_id=>wwv_flow_imp.id(41242100786971334824)
+,p_display_sequence=>50
+,p_display_value=>'Matching Page ID and Title'
+,p_return_value=>'PAGE_AND_TITLE'
+,p_help_text=>'Rewind if the Page ID and title match anything in the tree.'
+);
 wwv_flow_imp_shared.create_plugin_attribute(
  p_id=>wwv_flow_imp.id(41598759476778168728)
 ,p_plugin_id=>wwv_flow_imp.id(41102684474522359831)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>6
 ,p_display_sequence=>60
-,p_prompt=>'Do Not Rewind Pages'
+,p_prompt=>'Do Not Rewind (Pages)'
 ,p_attribute_type=>'PAGE NUMBERS'
 ,p_is_required=>false
 ,p_is_translatable=>false
@@ -751,7 +779,42 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'NOT_EQUALS'
 ,p_depending_on_expression=>'DO_NOT_REWIND'
+,p_attribute_group_id=>wwv_flow_imp.id(41889105334325775340)
 ,p_help_text=>'Enter a list of page IDs that will not rewind. For example, if you have a report and form, you may not want to rewind on the report.'
+);
+wwv_flow_imp_shared.create_plugin_attribute(
+ p_id=>wwv_flow_imp.id(41889042143016767221)
+,p_plugin_id=>wwv_flow_imp.id(41102684474522359831)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>7
+,p_display_sequence=>37
+,p_prompt=>'Do Not Add Breadcrumb (Pages)'
+,p_attribute_type=>'PAGE NUMBERS'
+,p_is_required=>false
+,p_is_translatable=>false
+,p_depending_on_attribute_id=>wwv_flow_imp.id(41242100786971334824)
+,p_depending_on_has_to_exist=>true
+,p_depending_on_condition_type=>'NOT_EQUALS'
+,p_depending_on_expression=>'DO_NOT_REWIND'
+,p_attribute_group_id=>wwv_flow_imp.id(41904478398362022267)
+,p_help_text=>'Enter a list of pages that should not have a breadcrumb entry created for them.'
+);
+wwv_flow_imp_shared.create_plugin_attribute(
+ p_id=>wwv_flow_imp.id(41892912849000958995)
+,p_plugin_id=>wwv_flow_imp.id(41102684474522359831)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>8
+,p_display_sequence=>40
+,p_prompt=>'Do Not Include Params (Pages)'
+,p_attribute_type=>'PAGE NUMBERS'
+,p_is_required=>false
+,p_is_translatable=>false
+,p_depending_on_attribute_id=>wwv_flow_imp.id(41114389687182603418)
+,p_depending_on_has_to_exist=>true
+,p_depending_on_condition_type=>'EQUALS'
+,p_depending_on_expression=>'COLLECTION'
+,p_attribute_group_id=>wwv_flow_imp.id(41904478398362022267)
+,p_help_text=>'Enter a comma separated list of page numbers. The breadcrumb for these pages will only include a link to the page, not any additional page parameters and not the REQUEST value.'
 );
 end;
 /
