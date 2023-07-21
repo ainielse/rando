@@ -33,7 +33,7 @@ prompt APPLICATION 238295 - AIT114
 -- Application Export:
 --   Application:     238295
 --   Name:            AIT114
---   Date and Time:   13:59 Friday July 21, 2023
+--   Date and Time:   15:18 Friday July 21, 2023
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Component Export
@@ -207,7 +207,7 @@ wwv_flow_imp_shared.create_plugin(
 '    l_max_levels            p_region.attribute_01%type := p_region.attribute_01;',
 '    l_nav_or_collection     p_region.attribute_02%type := p_region.attribute_02;',
 '    l_collection_name       p_region.attribute_03%type := p_region.attribute_03;',
-'    l_css_classes           p_region.attribute_04%type := p_region.attribute_04;',
+'    l_css_classes           p_region.attribute_04%type := p_region.attribute_04 ||'' sbcOnClick'';',
 '    l_rewind_method         p_region.attribute_05%type := p_region.attribute_05;',
 '    l_no_rewind_page_list   p_region.attribute_06%type := p_region.attribute_06;',
 '    l_only_link_pages       p_region.attribute_08%type := p_region.attribute_08;',
@@ -224,6 +224,20 @@ wwv_flow_imp_shared.create_plugin(
 '    l_page_mode         varchar2(4000);',
 '    l_rewind_id         number;',
 '    l_url               varchar2(4000);',
+'    l_javascript_rewind clob:=',
+'''',
+'$("ul.sbcOnClick a").click(function() {',
+'    apex.server.plugin (',
+'        "'' || apex_plugin.get_ajax_identifier ||''"',
+'        ,{',
+'        x01: this.href,',
+'        x02: document.title,',
+'        x03: "rewind"',
+'        }',
+'        );',
+'});',
+''';',
+'',
 '    l_javascript        clob :=',
 '''',
 'apex.server.plugin (',
@@ -231,6 +245,7 @@ wwv_flow_imp_shared.create_plugin(
 '    ,{',
 '    x01: window.location,',
 '    x02: document.title,',
+'    x03: "add"',
 '    }',
 '    );',
 ''';    ',
@@ -365,6 +380,10 @@ wwv_flow_imp_shared.create_plugin(
 '                l_url := apex_page.get_url(p_application => :APP_ID, p_page => page_rec.page_id);',
 '            end if;',
 '',
+'            if l_rewind_method = ''BREADCRUMB_CLICK'' then',
+'                l_url := l_url || ''#sbcseqid-'' || page_rec.seq_id;',
+'            end if;    ',
+'',
 '            if page_rec.rn - l_minus_if_reload < l_max_levels then',
 '                if page_rec.seq_id != l_max_seq_id or l_show_latest_page then',
 '                    sys.htp.p(do_substitutions( p_string        => l_bc_rec.non_current_page_option,',
@@ -385,6 +404,10 @@ wwv_flow_imp_shared.create_plugin(
 '                                    p_css_classes   => l_css_classes));                        ',
 '',
 '        sys.htp.p(l_bc_rec.after_last);',
+'',
+'        if l_rewind_method = ''BREADCRUMB_CLICK'' then',
+'            apex_javascript.add_onload_code (p_code => l_javascript_rewind);',
+'        end if;',
 '',
 '        apex_javascript.add_onload_code (p_code => l_javascript);',
 '    end if; -- it is a Normal page',
@@ -438,13 +461,17 @@ wwv_flow_imp_shared.create_plugin(
 '',
 '    l_url               varchar2(4000) := apex_application.g_x01;',
 '    l_title             varchar2(4000) := apex_application.g_x02;',
+'    l_add_or_rewind     varchar2(4000) := apex_application.g_x03;',
 '',
 '    l_max_levels        p_region.attribute_01%type := p_region.attribute_01;',
 '    l_nav_or_collection p_region.attribute_02%type := p_region.attribute_02;',
 '    l_collection_name   p_region.attribute_03%type := p_region.attribute_03;',
+'    l_no_rewind_page_list   p_region.attribute_06%type := p_region.attribute_06;',
 '    l_no_add_pages      p_region.attribute_07%type := p_region.attribute_07;',
+'    l_page_id           number;',
 '',
 '    l_latest_url        varchar2(4000);',
+'    l_seq_id            number;',
 '',
 'begin',
 '',
@@ -454,8 +481,14 @@ wwv_flow_imp_shared.create_plugin(
 '                                       p_region => p_region);',
 '    end if;',
 '',
-'    if  instr('','' || l_no_add_pages ||'',''  ,'','' ||:APP_PAGE_ID ||'','' )  = 0 then',
 '',
+'    -- add an entry',
+'    if l_add_or_rewind = ''add'' and instr('','' || l_no_add_pages ||'',''  ,'','' ||:APP_PAGE_ID ||'','' )  = 0 then',
+'',
+'        if instr(l_url, ''#sbcseqid-'') > 0 then',
+'          l_url := substr(l_url, 1, instr(l_url, ''#sbcseqid-'') - 1);',
+'        end if;',
+'        ',
 '        if not apex_collection.collection_exists(l_collection_name) then',
 '            apex_collection.create_collection(l_collection_name);',
 '        end if;',
@@ -481,8 +514,31 @@ wwv_flow_imp_shared.create_plugin(
 '                p_n001            => :APP_ID,',
 '                p_n002            => :APP_PAGE_ID);',
 '        end if;',
+'    -- END add an entry',
+'    elsif l_add_or_rewind = ''rewind'' then',
+'        -- find the seq_id',
+'        l_seq_id := to_number(substr(l_url, instr(l_url, ''#sbcseqid-'') + 10));',
 '',
-'    end if;',
+'        begin',
+'            select n002',
+'              into l_page_id',
+'              from apex_collections',
+'              where collection_name = l_collection_name',
+'              and seq_id = l_seq_id;',
+'        exception when no_data_found then null;',
+'        end;      ',
+'',
+'        -- check the no_rewind list',
+'        if  instr('','' || l_no_rewind_page_list ||'','' , '','' || l_page_id ||'','' )  = 0 then',
+'            for rewind in (select seq_id from apex_collections',
+'                            where collection_name = l_collection_name',
+'                              and seq_id >= l_seq_id) loop',
+'                apex_collection.delete_member(',
+'                    p_collection_name   => l_collection_name,',
+'                    p_seq               => rewind.seq_id);',
+'            end loop; ',
+'        end if;     ',
+'    end if; -- add an entry',
 '',
 '    --sys.htp.p(''{success: true}'');',
 '    apex_json.open_object;',
@@ -765,6 +821,14 @@ wwv_flow_imp_shared.create_plugin_attr_value(
 ,p_return_value=>'PAGE_AND_TITLE'
 ,p_help_text=>'Rewind if the Page ID and title match anything in the tree.'
 );
+wwv_flow_imp_shared.create_plugin_attr_value(
+ p_id=>wwv_flow_imp.id(41914502519940240482)
+,p_plugin_attribute_id=>wwv_flow_imp.id(41242100786971334824)
+,p_display_sequence=>60
+,p_display_value=>'When Breadcrumb Is Clicked'
+,p_return_value=>'BREADCRUMB_CLICK'
+,p_help_text=>'Only rewind if the breadcrumb is clicked.'
+);
 wwv_flow_imp_shared.create_plugin_attribute(
  p_id=>wwv_flow_imp.id(41598759476778168728)
 ,p_plugin_id=>wwv_flow_imp.id(41102684474522359831)
@@ -782,6 +846,9 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_attribute_group_id=>wwv_flow_imp.id(41889105334325775340)
 ,p_help_text=>'Enter a list of page IDs that will not rewind. For example, if you have a report and form, you may not want to rewind on the report.'
 );
+end;
+/
+begin
 wwv_flow_imp_shared.create_plugin_attribute(
  p_id=>wwv_flow_imp.id(41889042143016767221)
 ,p_plugin_id=>wwv_flow_imp.id(41102684474522359831)
