@@ -33,7 +33,7 @@ prompt APPLICATION 238295 - AIT114
 -- Application Export:
 --   Application:     238295
 --   Name:            AIT114
---   Date and Time:   15:18 Friday July 21, 2023
+--   Date and Time:   15:30 Friday July 21, 2023
 --   Exported By:     ANTON
 --   Flashback:       0
 --   Export Type:     Component Export
@@ -787,7 +787,7 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_prompt=>'Rewind Style'
 ,p_attribute_type=>'SELECT LIST'
 ,p_is_required=>true
-,p_default_value=>'PAGE_AND_TITLE'
+,p_default_value=>'BREADCRUMB_CLICK'
 ,p_is_translatable=>false
 ,p_depending_on_attribute_id=>wwv_flow_imp.id(41114389687182603418)
 ,p_depending_on_has_to_exist=>true
